@@ -1,0 +1,4 @@
+- import: /home/ryan/codeql-home/codeql-repo/cpp/ql/src/codeql-suites/cpp-lgtm-full.qls
+- import: /home/ryan/codeql-home/codeql-repo/cpp/ql/src/codeql-suites/cpp-code-scanning.qls
+- import: /home/ryan/codeql-home/codeql-repo/cpp/ql/src/codeql-suites/cpp-security-extended.qls
+- import: /home/ryan/codeql-home/codeql-repo/cpp/ql/src/codeql-suites/cpp-security-and-quality.qls
