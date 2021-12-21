@@ -1,0 +1,312 @@
+[2021-11-23 14:42:13] This is codeql database create decomp --language=cpp --command=make
+[2021-11-23 14:42:13] Log file was started late.
+[2021-11-23 14:42:13] [PROGRESS] database create> Initializing database at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp.
+[2021-11-23 14:42:13] Running plumbing command: codeql database init --language=cpp --source-root=/home/bork/dev/ctf-projects/picoctf/heres_a_libc/src --allow-missing-source-root=false --allow-already-existing -- /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp
+[2021-11-23 14:42:13] [PROGRESS] database init> Counting lines of code in /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src
+[2021-11-23 14:42:14] [PROGRESS] database init> Resolving extractor cpp.
+[2021-11-23 14:42:14] Calling plumbing command: codeql resolve languages --format=json
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Scanning for codeql-extractor.yml from /home/bork/codeql-home/codeql/.codeqlmanifest.json
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/csharp/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/go/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/xml/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/python/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/javascript/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/ruby/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/csv/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/html/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/cpp/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/properties/codeql-extractor.yml.
+[2021-11-23 14:42:14] [DETAILS] resolve languages> Parsing /home/bork/codeql-home/codeql/java/codeql-extractor.yml.
+[2021-11-23 14:42:14] Plumbing command codeql resolve languages completed:
+                      {
+                        "cpp" : [
+                          "/home/bork/codeql-home/codeql/cpp"
+                        ],
+                        "csharp" : [
+                          "/home/bork/codeql-home/codeql/csharp"
+                        ],
+                        "csv" : [
+                          "/home/bork/codeql-home/codeql/csv"
+                        ],
+                        "go" : [
+                          "/home/bork/codeql-home/codeql/go"
+                        ],
+                        "html" : [
+                          "/home/bork/codeql-home/codeql/html"
+                        ],
+                        "java" : [
+                          "/home/bork/codeql-home/codeql/java"
+                        ],
+                        "javascript" : [
+                          "/home/bork/codeql-home/codeql/javascript"
+                        ],
+                        "properties" : [
+                          "/home/bork/codeql-home/codeql/properties"
+                        ],
+                        "python" : [
+                          "/home/bork/codeql-home/codeql/python"
+                        ],
+                        "ruby" : [
+                          "/home/bork/codeql-home/codeql/ruby"
+                        ],
+                        "xml" : [
+                          "/home/bork/codeql-home/codeql/xml"
+                        ]
+                      }
+[2021-11-23 14:42:14] [DETAILS] database init> Found candidate extractor root for cpp: /home/bork/codeql-home/codeql/cpp.
+[2021-11-23 14:42:14] [PROGRESS] database init> Successfully loaded extractor C/C++ (cpp) from /home/bork/codeql-home/codeql/cpp.
+[2021-11-23 14:42:14] [PROGRESS] database init> Created skeleton CodeQL database at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp. This in-progress database is ready to be populated by an extractor.
+[2021-11-23 14:42:14] Plumbing command codeql database init completed.
+[2021-11-23 14:42:14] [PROGRESS] database create> Running build command: [make]
+[2021-11-23 14:42:14] Running plumbing command: codeql database trace-command --working-dir=/home/bork/dev/ctf-projects/picoctf/heres_a_libc/src --index-traceless-dbs --no-db-cluster -- /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp make
+[2021-11-23 14:42:14] Setting up tracing from specification at /home/bork/codeql-home/codeql/cpp/tools/linux64/compiler-tracing.spec.
+[2021-11-23 14:42:14] [PROGRESS] database trace-command> Running command in /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src: [make]
+[2021-11-23 14:42:14] [build-stdout] gcc -c -o vuln_todo.o vuln_todo.c -I.
+[2021-11-23 14:42:15] [build-stderr] vuln_todo.c: In function ‘main’:
+[2021-11-23 14:42:15] [build-stderr] vuln_todo.c:76:12: warning: assignment to ‘int64_t’ {aka ‘long int’} from ‘char *’ makes integer from pointer without a cast [-Wint-conversion]
+[2021-11-23 14:42:15] [build-stderr]    76 |   local_88 = param_2;
+[2021-11-23 14:42:15] [build-stderr]       |            ^
+[2021-11-23 14:42:15] [build-stderr] vuln_todo.c:82:3: warning: implicit declaration of function ‘setresgid’; did you mean ‘setregid’? [-Wimplicit-function-declaration]
+[2021-11-23 14:42:15] [build-stderr]    82 |   setresgid(local_34,local_34,local_34);
+[2021-11-23 14:42:15] [build-stderr]       |   ^~~~~~~~~
+[2021-11-23 14:42:15] [build-stderr]       |   setregid
+[2021-11-23 14:42:16] [build-stdout] gcc -o vuln_todo vuln_todo.o -I.
+[2021-11-23 14:42:17] Plumbing command codeql database trace-command completed.
+[2021-11-23 14:42:17] [PROGRESS] database create> Finalizing database at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp.
+[2021-11-23 14:42:17] Running plumbing command: codeql database finalize --mode=normal --keep-temporary --no-db-cluster -- /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp
+[2021-11-23 14:42:17] [PROGRESS] database finalize> Running TRAP import for CodeQL database at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp...
+[2021-11-23 14:42:17] Running plumbing command: codeql dataset import --dbscheme=/home/bork/codeql-home/codeql/cpp/semmlecode.cpp.dbscheme -- /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/trap/cpp
+[2021-11-23 14:42:17] Clearing disk cache since the version file /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp/default/cache/version does not exist
+[2021-11-23 14:42:17] Tuple pool not found. Clearing relations with cached strings
+[2021-11-23 14:42:17] Trimming disk cache at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp/default/cache in mode brutal.
+[2021-11-23 14:42:17] Sequence stamp origin is -6520032925349175325
+[2021-11-23 14:42:17] Pausing evaluation to hard-clear memory at sequence stamp o+0
+[2021-11-23 14:42:17] Unpausing evaluation
+[2021-11-23 14:42:17] Pausing evaluation to quickly trim disk at sequence stamp o+1
+[2021-11-23 14:42:17] Unpausing evaluation
+[2021-11-23 14:42:17] Pausing evaluation to zealously trim disk at sequence stamp o+2
+[2021-11-23 14:42:17] Unpausing evaluation
+[2021-11-23 14:42:17] Trimming completed (7ms): Purged everything.
+[2021-11-23 14:42:17] Scanning for files in /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/trap/cpp
+[2021-11-23 14:42:17] Grouping TRAPs by link target
+[2021-11-23 14:42:17] Scanning cpp_predefined.acb19af8.trap (vuln_todo.c.d7801578_0.trap.tar.br) (1 of 42)
+[2021-11-23 14:42:17] Scanning stdc-predef.h.3efb7735.trap (vuln_todo.c.d7801578_0.trap.tar.br) (2 of 42)
+[2021-11-23 14:42:17] Scanning wordsize.h.0a5d81b3.trap (vuln_todo.c.d7801578_0.trap.tar.br) (3 of 42)
+[2021-11-23 14:42:17] Scanning long-double.h.c86d65af.trap (vuln_todo.c.d7801578_0.trap.tar.br) (4 of 42)
+[2021-11-23 14:42:17] Scanning cdefs.h.002f55cf.trap (vuln_todo.c.d7801578_0.trap.tar.br) (5 of 42)
+[2021-11-23 14:42:17] Scanning stubs-64.h.3efb7735.trap (vuln_todo.c.d7801578_0.trap.tar.br) (6 of 42)
+[2021-11-23 14:42:17] Scanning stubs.h.d28181f8.trap (vuln_todo.c.d7801578_0.trap.tar.br) (7 of 42)
+[2021-11-23 14:42:17] Scanning features.h.586281a3.trap (vuln_todo.c.d7801578_0.trap.tar.br) (8 of 42)
+[2021-11-23 14:42:17] Scanning libc-header-start.h.60e038c6.trap (vuln_todo.c.d7801578_0.trap.tar.br) (9 of 42)
+[2021-11-23 14:42:17] Scanning timesize.h.4bc5b25a.trap (vuln_todo.c.d7801578_0.trap.tar.br) (10 of 42)
+[2021-11-23 14:42:17] Scanning typesizes.h.710fd7d4.trap (vuln_todo.c.d7801578_0.trap.tar.br) (11 of 42)
+[2021-11-23 14:42:17] Scanning time64.h.44fad59b.trap (vuln_todo.c.d7801578_0.trap.tar.br) (12 of 42)
+[2021-11-23 14:42:17] Scanning types.h.1590e287.trap (vuln_todo.c.d7801578_0.trap.tar.br) (13 of 42)
+[2021-11-23 14:42:17] Scanning wchar.h.4cdc087f.trap (vuln_todo.c.d7801578_0.trap.tar.br) (14 of 42)
+[2021-11-23 14:42:17] Scanning stdint-intn.h.3a2bc0a5.trap (vuln_todo.c.d7801578_0.trap.tar.br) (15 of 42)
+[2021-11-23 14:42:17] Scanning stdint-uintn.h.b1098e1e.trap (vuln_todo.c.d7801578_0.trap.tar.br) (16 of 42)
+[2021-11-23 14:42:17] Scanning stdint.h.0059e47f.trap (vuln_todo.c.d7801578_0.trap.tar.br) (17 of 42)
+[2021-11-23 14:42:17] Scanning stdint.h.1dcbd850.trap (vuln_todo.c.d7801578_0.trap.tar.br) (18 of 42)
+[2021-11-23 14:42:17] Scanning libc-header-start.h.ef0262b5.trap (vuln_todo.c.d7801578_0.trap.tar.br) (19 of 42)
+[2021-11-23 14:42:17] Scanning stddef.h.70326e3e.trap (vuln_todo.c.d7801578_0.trap.tar.br) (20 of 42)
+[2021-11-23 14:42:17] Scanning stdarg.h.d060dbdc.trap (vuln_todo.c.d7801578_0.trap.tar.br) (21 of 42)
+[2021-11-23 14:42:17] Scanning __mbstate_t.h.ce8652d1.trap (vuln_todo.c.d7801578_0.trap.tar.br) (22 of 42)
+[2021-11-23 14:42:17] Scanning __fpos_t.h.cb3e0523.trap (vuln_todo.c.d7801578_0.trap.tar.br) (23 of 42)
+[2021-11-23 14:42:17] Scanning __fpos64_t.h.c87d7bdd.trap (vuln_todo.c.d7801578_0.trap.tar.br) (24 of 42)
+[2021-11-23 14:42:17] Scanning __FILE.h.916d4b36.trap (vuln_todo.c.d7801578_0.trap.tar.br) (25 of 42)
+[2021-11-23 14:42:17] Scanning FILE.h.ab31225d.trap (vuln_todo.c.d7801578_0.trap.tar.br) (26 of 42)
+[2021-11-23 14:42:17] Scanning struct_FILE.h.3b259277.trap (vuln_todo.c.d7801578_0.trap.tar.br) (27 of 42)
+[2021-11-23 14:42:17] Scanning stdio_lim.h.956cae89.trap (vuln_todo.c.d7801578_0.trap.tar.br) (28 of 42)
+[2021-11-23 14:42:17] Scanning sys_errlist.h.760eb801.trap (vuln_todo.c.d7801578_0.trap.tar.br) (29 of 42)
+[2021-11-23 14:42:17] Scanning stdio.h.e1eb3805.trap (vuln_todo.c.d7801578_0.trap.tar.br) (30 of 42)
+[2021-11-23 14:42:17] Scanning posix_opt.h.2962e496.trap (vuln_todo.c.d7801578_0.trap.tar.br) (31 of 42)
+[2021-11-23 14:42:17] Scanning environments.h.aa8f16d7.trap (vuln_todo.c.d7801578_0.trap.tar.br) (32 of 42)
+[2021-11-23 14:42:17] Scanning stddef.h.62e36e83.trap (vuln_todo.c.d7801578_0.trap.tar.br) (33 of 42)
+[2021-11-23 14:42:17] Scanning confname.h.d50c3237.trap (vuln_todo.c.d7801578_0.trap.tar.br) (34 of 42)
+[2021-11-23 14:42:17] Scanning getopt_core.h.9086de86.trap (vuln_todo.c.d7801578_0.trap.tar.br) (35 of 42)
+[2021-11-23 14:42:17] Scanning getopt_posix.h.10f7e757.trap (vuln_todo.c.d7801578_0.trap.tar.br) (36 of 42)
+[2021-11-23 14:42:17] Scanning unistd_ext.h.d7e24265.trap (vuln_todo.c.d7801578_0.trap.tar.br) (37 of 42)
+[2021-11-23 14:42:17] Scanning unistd.h.aec9fb1c.trap (vuln_todo.c.d7801578_0.trap.tar.br) (38 of 42)
+[2021-11-23 14:42:17] Scanning vuln_todo.c.d7801578.trap (vuln_todo.c.d7801578_0.trap.tar.br) (39 of 42)
+[2021-11-23 14:42:17] Scanning 48374350_0.trap.br (40 of 42)
+[2021-11-23 14:42:17] Scanning vuln_todo.trap.br (41 of 42)
+[2021-11-23 14:42:17] Scanning sourceLocationPrefix.trap.gz (42 of 42)
+[2021-11-23 14:42:17] Assembling vuln_todo.link with 40 files (1 of 2)
+[2021-11-23 14:42:17] Assembling no link target with 2 files (2 of 2)
+[2021-11-23 14:42:17] Importing cpp_predefined.acb19af8.trap (vuln_todo.c.d7801578_0.trap.tar.br) for no link target (1 of 42)
+[2021-11-23 14:42:17] Importing stdc-predef.h.3efb7735.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (2 of 42)
+[2021-11-23 14:42:17] Importing wordsize.h.0a5d81b3.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (3 of 42)
+[2021-11-23 14:42:17] Importing long-double.h.c86d65af.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (4 of 42)
+[2021-11-23 14:42:17] Importing cdefs.h.002f55cf.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (5 of 42)
+[2021-11-23 14:42:17] Importing stubs-64.h.3efb7735.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (6 of 42)
+[2021-11-23 14:42:17] Importing stubs.h.d28181f8.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (7 of 42)
+[2021-11-23 14:42:17] Importing features.h.586281a3.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (8 of 42)
+[2021-11-23 14:42:17] Importing libc-header-start.h.60e038c6.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (9 of 42)
+[2021-11-23 14:42:17] Importing timesize.h.4bc5b25a.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (10 of 42)
+[2021-11-23 14:42:17] Importing typesizes.h.710fd7d4.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (11 of 42)
+[2021-11-23 14:42:17] Importing time64.h.44fad59b.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (12 of 42)
+[2021-11-23 14:42:17] Importing types.h.1590e287.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (13 of 42)
+[2021-11-23 14:42:17] Importing wchar.h.4cdc087f.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (14 of 42)
+[2021-11-23 14:42:17] Importing stdint-intn.h.3a2bc0a5.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (15 of 42)
+[2021-11-23 14:42:17] Importing stdint-uintn.h.b1098e1e.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (16 of 42)
+[2021-11-23 14:42:17] Importing stdint.h.0059e47f.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (17 of 42)
+[2021-11-23 14:42:17] Importing stdint.h.1dcbd850.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (18 of 42)
+[2021-11-23 14:42:17] Importing libc-header-start.h.ef0262b5.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (19 of 42)
+[2021-11-23 14:42:17] Importing stddef.h.70326e3e.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (20 of 42)
+[2021-11-23 14:42:17] Importing stdarg.h.d060dbdc.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (21 of 42)
+[2021-11-23 14:42:17] Importing __mbstate_t.h.ce8652d1.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (22 of 42)
+[2021-11-23 14:42:17] Importing __fpos_t.h.cb3e0523.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (23 of 42)
+[2021-11-23 14:42:17] Importing __fpos64_t.h.c87d7bdd.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (24 of 42)
+[2021-11-23 14:42:17] Importing __FILE.h.916d4b36.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (25 of 42)
+[2021-11-23 14:42:17] Importing FILE.h.ab31225d.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (26 of 42)
+[2021-11-23 14:42:17] Importing struct_FILE.h.3b259277.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (27 of 42)
+[2021-11-23 14:42:17] Importing stdio_lim.h.956cae89.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (28 of 42)
+[2021-11-23 14:42:17] Importing sys_errlist.h.760eb801.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (29 of 42)
+[2021-11-23 14:42:17] Importing stdio.h.e1eb3805.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (30 of 42)
+[2021-11-23 14:42:17] Importing posix_opt.h.2962e496.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (31 of 42)
+[2021-11-23 14:42:17] Importing environments.h.aa8f16d7.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (32 of 42)
+[2021-11-23 14:42:17] Importing stddef.h.62e36e83.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (33 of 42)
+[2021-11-23 14:42:17] Importing confname.h.d50c3237.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (34 of 42)
+[2021-11-23 14:42:17] Importing getopt_core.h.9086de86.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (35 of 42)
+[2021-11-23 14:42:17] Importing getopt_posix.h.10f7e757.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (36 of 42)
+[2021-11-23 14:42:17] Importing unistd_ext.h.d7e24265.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (37 of 42)
+[2021-11-23 14:42:17] Importing unistd.h.aec9fb1c.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (38 of 42)
+[2021-11-23 14:42:17] Importing vuln_todo.c.d7801578.trap (vuln_todo.c.d7801578_0.trap.tar.br) for vuln_todo.link (39 of 42)
+[2021-11-23 14:42:17] Importing 48374350_0.trap.br for vuln_todo.link (40 of 42)
+[2021-11-23 14:42:17] Importing vuln_todo.trap.br for vuln_todo.link (41 of 42)
+[2021-11-23 14:42:17] Importing sourceLocationPrefix.trap.gz for no link target (42 of 42)
+[2021-11-23 14:42:17] Merging 1 fragment for builtintypes.
+[2021-11-23 14:42:17] Merging 1 fragment for unspecifiedtype.
+[2021-11-23 14:42:17] Merging 1 fragment for files.
+[2021-11-23 14:42:17] Merging 1 fragment for locations_default.
+[2021-11-23 14:42:17] Merging 1 fragment for link_targets.
+[2021-11-23 14:42:17] Merging 1 fragment for locations_stmt.
+[2021-11-23 14:42:17] Merging 1 fragment for locations_expr.
+[2021-11-23 14:42:17] Merging 1 fragment for usertypes.
+[2021-11-23 14:42:17] Merging 1 fragment for link_parent.
+[2021-11-23 14:42:17] Merging 1 fragment for usertypesize.
+[2021-11-23 14:42:17] Merging 1 fragment for is_pod_class.
+[2021-11-23 14:42:17] Merging 1 fragment for is_standard_layout_class.
+[2021-11-23 14:42:17] Merging 1 fragment for is_complete.
+[2021-11-23 14:42:17] Merging 1 fragment for membervariables.
+[2021-11-23 14:42:17] Merging 1 fragment for fieldoffsets.
+[2021-11-23 14:42:17] Merging 1 fragment for var_decls.
+[2021-11-23 14:42:17] Merging 1 fragment for var_def.
+[2021-11-23 14:42:17] Merging 1 fragment for derivedtypes.
+[2021-11-23 14:42:17] Merging 1 fragment for pointerishsize.
+[2021-11-23 14:42:17] Merging 1 fragment for member.
+[2021-11-23 14:42:17] Merging 1 fragment for namespaces.
+[2021-11-23 14:42:17] Merging 1 fragment for specialnamequalifyingelements.
+[2021-11-23 14:42:17] Merging 1 fragment for mangled_name.
+[2021-11-23 14:42:17] Merging 1 fragment for specifiers.
+[2021-11-23 14:42:17] Merging 1 fragment for numlines.
+[2021-11-23 14:42:17] Merging 1 fragment for preprocdirects.
+[2021-11-23 14:42:17] Merging 1 fragment for preproctext.
+[2021-11-23 14:42:17] Merging 1 fragment for preprocfalse.
+[2021-11-23 14:42:17] Merging 1 fragment for macroinvocations.
+[2021-11-23 14:42:17] Merging 1 fragment for comments.
+[2021-11-23 14:42:17] Merging 1 fragment for commentbinding.
+[2021-11-23 14:42:17] Merging 1 fragment for containerparent.
+[2021-11-23 14:42:17] Merging 1 fragment for folders.
+[2021-11-23 14:42:17] Merging 1 fragment for preprocpair.
+[2021-11-23 14:42:17] Merging 1 fragment for preproctrue.
+[2021-11-23 14:42:17] Merging 1 fragment for includes.
+[2021-11-23 14:42:17] Merging 1 fragment for macro_argument_unexpanded.
+[2021-11-23 14:42:17] Merging 1 fragment for macro_argument_expanded.
+[2021-11-23 14:42:17] Merging 1 fragment for macroparent.
+[2021-11-23 14:42:17] Merging 1 fragment for type_mentions.
+[2021-11-23 14:42:17] Merging 1 fragment for typedefbase.
+[2021-11-23 14:42:17] Merging 1 fragment for type_decls.
+[2021-11-23 14:42:17] Merging 1 fragment for type_decl_top.
+[2021-11-23 14:42:17] Merging 1 fragment for type_def.
+[2021-11-23 14:42:17] Merging 1 fragment for arraysizes.
+[2021-11-23 14:42:17] Merging 1 fragment for values.
+[2021-11-23 14:42:17] Merging 1 fragment for exprs.
+[2021-11-23 14:42:17] Merging 1 fragment for expr_types.
+[2021-11-23 14:42:17] Merging 1 fragment for valuebind.
+[2021-11-23 14:42:17] Merging 1 fragment for inmacroexpansion.
+[2021-11-23 14:42:17] Merging 1 fragment for macrolocationbind.
+[2021-11-23 14:42:17] Merging 1 fragment for varspecifiers.
+[2021-11-23 14:42:17] Merging 1 fragment for valuetext.
+[2021-11-23 14:42:17] Merging 1 fragment for compgenerated.
+[2021-11-23 14:42:17] Merging 1 fragment for sizeof_bind.
+[2021-11-23 14:42:17] Merging 1 fragment for exprconv.
+[2021-11-23 14:42:17] Merging 1 fragment for conversionkinds.
+[2021-11-23 14:42:17] Merging 1 fragment for exprparents.
+[2021-11-23 14:42:17] Merging 1 fragment for globalvariables.
+[2021-11-23 14:42:17] Merging 1 fragment for var_decl_specifiers.
+[2021-11-23 14:42:17] Merging 1 fragment for typespecifiers.
+[2021-11-23 14:42:17] Merging 1 fragment for functions.
+[2021-11-23 14:42:17] Merging 1 fragment for function_return_type.
+[2021-11-23 14:42:17] Merging 1 fragment for params.
+[2021-11-23 14:42:17] Merging 1 fragment for fun_decls.
+[2021-11-23 14:42:17] Merging 1 fragment for fun_decl_specifiers.
+[2021-11-23 14:42:17] Merging 1 fragment for param_decl_bind.
+[2021-11-23 14:42:17] Merging 1 fragment for attributes.
+[2021-11-23 14:42:17] Merging 1 fragment for funcattributes.
+[2021-11-23 14:42:17] Merging 1 fragment for attribute_arg_value.
+[2021-11-23 14:42:17] Merging 1 fragment for attribute_args.
+[2021-11-23 14:42:17] Merging 1 fragment for funspecifiers.
+[2021-11-23 14:42:17] Merging 1 fragment for enumconstants.
+[2021-11-23 14:42:17] Merging 1 fragment for initialisers.
+[2021-11-23 14:42:17] Merging 1 fragment for varbind.
+[2021-11-23 14:42:17] Merging 1 fragment for affectedbymacroexpansion.
+[2021-11-23 14:42:17] Merging 1 fragment for fileannotations.
+[2021-11-23 14:42:17] Merging 1 fragment for fun_def.
+[2021-11-23 14:42:17] Merging 1 fragment for stmts.
+[2021-11-23 14:42:17] Merging 1 fragment for localvariables.
+[2021-11-23 14:42:17] Merging 1 fragment for stmt_decl_bind.
+[2021-11-23 14:42:17] Merging 1 fragment for stmt_decl_entry_bind.
+[2021-11-23 14:42:17] Merging 1 fragment for expr_isload.
+[2021-11-23 14:42:17] Merging 1 fragment for routinetypes.
+[2021-11-23 14:42:17] Merging 1 fragment for routinetypeargs.
+[2021-11-23 14:42:17] Merging 1 fragment for funbind.
+[2021-11-23 14:42:17] Merging 1 fragment for for_condition.
+[2021-11-23 14:42:17] Merging 1 fragment for stmtparents.
+[2021-11-23 14:42:17] Merging 1 fragment for for_body.
+[2021-11-23 14:42:17] Merging 1 fragment for for_initialization.
+[2021-11-23 14:42:17] Merging 1 fragment for for_update.
+[2021-11-23 14:42:17] Merging 1 fragment for do_body.
+[2021-11-23 14:42:17] Merging 1 fragment for blockscope.
+[2021-11-23 14:42:17] Merging 1 fragment for function_entry_point.
+[2021-11-23 14:42:17] Merging 1 fragment for if_then.
+[2021-11-23 14:42:17] Merging 1 fragment for if_else.
+[2021-11-23 14:42:17] Merging 1 fragment for fun_implicit.
+[2021-11-23 14:42:17] Merging 1 fragment for expr_ancestor.
+[2021-11-23 14:42:17] Merging 1 fragment for iscall.
+[2021-11-23 14:42:17] Merging 1 fragment for compilations.
+[2021-11-23 14:42:17] Merging 1 fragment for compilation_args.
+[2021-11-23 14:42:17] Merging 1 fragment for compilation_compiling_files.
+[2021-11-23 14:42:17] Merging 1 fragment for compilation_time.
+[2021-11-23 14:42:17] Merging 1 fragment for compilation_finished.
+[2021-11-23 14:42:17] Merging 1 fragment for sourceLocationPrefix.
+[2021-11-23 14:42:17] Saving string and id pools to disk.
+[2021-11-23 14:42:17] Finished importing trap files.
+[2021-11-23 14:42:17] Pausing evaluation to close the cache at sequence stamp o+3
+[2021-11-23 14:42:17] The disk cache is freshly trimmed; leave it be.
+[2021-11-23 14:42:17] Unpausing evaluation
+[2021-11-23 14:42:17] Plumbing command codeql dataset import completed.
+[2021-11-23 14:42:17] [PROGRESS] database finalize> TRAP import complete (900ms).
+[2021-11-23 14:42:18] Running plumbing command: codeql database cleanup --mode=normal --keep-temporary -- /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp
+[2021-11-23 14:42:18] [PROGRESS] database cleanup> Cleaning up existing TRAP files after import...
+[2021-11-23 14:42:18] [PROGRESS] database cleanup> TRAP files cleaned up (1ms).
+[2021-11-23 14:42:18] [PROGRESS] database cleanup> Cleaning up scratch directory...
+[2021-11-23 14:42:18] [PROGRESS] database cleanup> Scratch directory cleaned up (0ms).
+[2021-11-23 14:42:18] Running plumbing command: codeql dataset cleanup --mode=normal -- /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp
+[2021-11-23 14:42:18] [PROGRESS] dataset cleanup> Cleaning up dataset in /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp.
+[2021-11-23 14:42:18] Trimming disk cache at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp/default/cache in mode normal.
+[2021-11-23 14:42:18] Sequence stamp origin is -6520032922329096057
+[2021-11-23 14:42:18] Pausing evaluation to zealously trim disk at sequence stamp o+0
+[2021-11-23 14:42:18] Unpausing evaluation
+[2021-11-23 14:42:18] Trimming completed (1ms): Trimmed disposable data from cache.
+[2021-11-23 14:42:18] Pausing evaluation to close the cache at sequence stamp o+1
+[2021-11-23 14:42:18] The disk cache is freshly trimmed; leave it be.
+[2021-11-23 14:42:18] Unpausing evaluation
+[2021-11-23 14:42:18] [PROGRESS] dataset cleanup> Trimmed disposable data from cache.
+[2021-11-23 14:42:18] [PROGRESS] dataset cleanup> Finalizing dataset in /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp
+[2021-11-23 14:42:18] [DETAILS] dataset cleanup> Finished deleting ID pool from /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp/db-cpp (1ms).
+[2021-11-23 14:42:18] Plumbing command codeql dataset cleanup completed.
+[2021-11-23 14:42:18] Plumbing command codeql database cleanup completed with status 0.
+[2021-11-23 14:42:18] Plumbing command codeql database finalize completed.
+[2021-11-23 14:42:18] [PROGRESS] database create> Successfully created database at /home/bork/dev/ctf-projects/picoctf/heres_a_libc/src/decomp.
+[2021-11-23 14:42:18] Terminating normally.
