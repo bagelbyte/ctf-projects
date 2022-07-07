@@ -1,0 +1,197 @@
+#+title: Writeup
+
+* the code:
+#+begin_src c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include "asm.h"
+
+#define BUFSIZE 32
+#define FLAGSIZE 64
+
+void win() {
+  char buf[FLAGSIZE];
+  FILE *f = fopen("flag.txt","r");
+  if (f == NULL) {
+    printf("%s %s", "Please create 'flag.txt' in this directory with your",
+                    "own debugging flag.\n");
+    exit(0);
+  }
+
+  fgets(buf,FLAGSIZE,f);
+  printf(buf);    (ref:bug)
+}
+
+void vuln(){
+  char buf[BUFSIZE];
+
+  gets(buf);
+
+  printf("Okay, time to return... Fingers Crossed... Jumping to 0x%x\n", get_return_address());
+}
+
+int main(int argc, char **argv){
+
+  setvbuf(stdout, NULL, _IONBF, 0);
+
+  gid_t gid = getegid();
+  setresgid(gid, gid, gid);
+
+  puts("Please enter your string: ");
+  vuln();
+  return 0;
+}
+#+end_src
+
+* the writeup
+
+** whats the Bugatti
+so its pretty obvious that the bug is [[(bug)][here]]. we are doing a gets operation on some buffer, which means that arbitrary length input will make it to this function, and then we should return to wherever it is that we want to go.
+** protections check
+lets see what the protections are on this
+#+begin_src bash :results output pp
+r2 -c "i" -q ./vuln
+#+end_src
+
+#+RESULTS:
+#+begin_example
+fd       3
+file     ./vuln
+size     0x3d58
+humansz  15.3K
+minopsz  1
+maxopsz  16
+invopsz  1
+mode     r-x
+format   elf
+iorw     false
+block    0x100
+type     EXEC (Executable file)
+arch     x86
+baddr    0x8048000
+binsz    14541
+bintype  elf
+bits     32
+canary   false
+class    ELF32
+compiler GCC: (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0
+crypto   false
+endian   little
+havecode true
+intrp    /lib/ld-linux.so.2
+laddr    0x0
+lang     c
+linenum  true
+lsyms    true
+machine  Intel 80386
+nx       false
+os       linux
+pic      false
+relocs   true
+relro    partial
+rpath    NONE
+sanitize false
+static   false
+stripped false
+subsys   linux
+va       true
+#+end_example
+
+
+you can see that pic is false, so we dont have to worry about addresses shifting on us
+
+** getting our addresses
+going to use r2 for this
+#+begin_src bash :results output pp
+r2 -qA -c "afl" ./vuln
+#+end_src
+
+#+RESULTS:
+#+begin_example
+0x080490e0    1 54           entry0
+0x08049117    1 4            fcn.08049117
+0x080490a0    1 6            sym.imp.__libc_start_main
+0x08049140    4 49   -> 40   sym.deregister_tm_clones
+0x08049180    4 57   -> 53   sym.register_tm_clones
+0x080491c0    3 41   -> 34   sym.__do_global_dtors_aux
+0x080491f0    1 6            entry.init0
+0x080493c0    1 5            sym.__libc_csu_fini
+0x08049130    1 4            sym.__x86.get_pc_thunk.bx
+0x080493c5    1 4            sym.__x86.get_pc_thunk.bp
+0x08049281    1 67           sym.vuln
+0x08049050    1 6            sym.imp.gets
+0x0804933e    1 4            loc.get_return_address
+0x08049040    1 6            sym.imp.printf
+0x080493cc    1 24           sym._fini
+0x08049350    4 101          sym.__libc_csu_init
+0x080491f6    3 139          sym.win
+0x080490c0    1 6            sym.imp.fopen
+0x08049090    1 6            sym.imp.exit
+0x08049060    1 6            sym.imp.fgets
+0x08049120    1 5            sym._dl_relocate_static_pie
+0x080492c4    1 122          main
+0x080490b0    1 6            sym.imp.setvbuf
+0x08049070    1 6            sym.imp.getegid
+0x080490d0    1 6            sym.imp.setresgid
+0x08049080    1 6            sym.imp.puts
+0x08049000    3 36           sym._init
+#+end_example
+
+so we see here that the address of the win function is at 0x080491f6, and our objective is for the gets function to write stuff onto the stack such that the address that gets returned is going to be written with the value of our win function
+
+** solving it
+
+so we are going to go ahead and do this in angr, specifically using the symbion angr. the objective is to find the gets size that has a property of overwriting where the return address is stored from the ~vuln~ stack frame. so that we dont have to do anything annoying, we can use symbion to execute the program up to the point that we are are at the first instruction of the vuln function. in this state, the stack pointer should be pointing to the 4 byte (because x86/32 bit pointers) return address. to verify, lets run symbion
+
+#+begin_src jupyter-python :session one :results value pp
+import os
+import unittest
+import subprocess
+import angr
+import claripy
+import avatar2
+from angr_targets import AvatarGDBConcreteTarget
+
+binary_x64 = os.path.realpath("./vuln")
+
+GDB_SERVER_IP = '127.0.0.1'
+GDB_SERVER_PORT = 9999
+
+subprocess.Popen("qemu-i386-static -g  %s %s" % (GDB_SERVER_PORT,'./vuln'),
+                  stdout=subprocess.PIPE,
+                  stderr=subprocess.PIPE, shell=True)
+#+end_src
+
+#+RESULTS:
+: <subprocess.Popen at 0x7f99a84f0cd0>
+
+
+just getting the qemu proccess open. now we gotta connect to it
+
+#+begin_src jupyter-python :session one :results value pp
+avatar_gdb = AvatarGDBConcreteTarget(avatar2.archs.x86.X86, GDB_SERVER_IP, GDB_SERVER_PORT)
+#+end_src
+
+#+RESULTS:
+
+#+begin_src jupyter-python :session one :results value pp
+p = angr.Project(binary_x64, concrete_target=avatar_gdb, use_sim_procedures=True,
+                    page_size=0x1000)
+state = p.factory.entry_state()
+state.options.add(angr.options.SYMBION_SYNC_CLE)
+state.options.add(angr.options.SYMBION_KEEP_STUBS_ON_SYNC)
+simgr = p.factory.simgr(state)
+
+address = 0x080491f6
+simgr.use_technique(angr.exploration_techniques.Symbion(find=[address], memory_concretize=[], register_concretize=[], timeout=10))
+exploration = simgr.run()
+#+end_src
+
+#+RESULTS:
+: CRITICAL | 2022-07-06 14:23:16,979 | angr.engines.concrete | Timeout has been reached during resuming of concrete process
+: 2022-07-06 14:23:16,979 | angr.engines.concrete.CRITICAL | Timeout has been reached during resuming of concrete process
+: CRITICAL | 2022-07-06 14:23:16,985 | angr.engines.concrete | This can be a bad thing ( the ConcreteTarget didn't hit your breakpoint ) orjust it will take a while.
+: 2022-07-06 14:23:16,985 | angr.engines.concrete.CRITICAL | This can be a bad thing ( the ConcreteTarget didn't hit your breakpoint ) orjust it will take a while.

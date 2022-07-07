@@ -1,0 +1,9 @@
+#Ghidra Lock File
+#Wed May 04 16:04:17 EDT 2022
+OS\ Name=Linux
+OS\ Version=5.13.0-40-generic
+Username=bork
+Hostname=borkbork
+<META>\ Supports\ File\ Channel\ Locking=Channel Lock
+OS\ Architecture=amd64
+Timestamp=5/4/22, 4\:04 PM
